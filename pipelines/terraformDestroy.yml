@@ -7,7 +7,7 @@ pipelines:
     display_order: -1
     materials:
       ansible:
-        git: https://github.com/Tejaswini-Devops/expense-terraform
+        git: https://github.com/Tejaswini-Devops/expense-terraform.git
         branch: main
     stages:
       - dev:
@@ -24,7 +24,7 @@ pipelines:
                     arguments: ["init", "-backend-config=env-dev/state.tfvars"]
                 - exec:
                     command: terraform
-                    arguments: ["apply", "-auto-approve", "-var-file=env-dev/main.tfvars"]
+                    arguments: ["destroy", "-auto-approve", "-var-file=env-dev/main.tfvars"]
 
       - prod:
           fetch_materials: true
@@ -40,4 +40,4 @@ pipelines:
                     arguments: ["init", "-backend-config=env-prod/state.tfvars"]
                 - exec:
                     command: terraform
-                    arguments: ["apply", "-auto-approve", "-var-file=env-prod/main.tfvars"]
+                    arguments: ["destroy", "-auto-approve", "-var-file=env-prod/main.tfvars"]
