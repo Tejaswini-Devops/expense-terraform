@@ -63,7 +63,7 @@ resource "aws_security_group" "test" {
 }
 
 resource "aws_instance" "test" {
-  ami           = data.aws_ami
+  ami           = data.aws_ami.test.id
   instance_type = "t3.micro"
   subnet_id = aws_subnet.main[0].id
   vpc_security_group_ids = [aws_security_group.test.id]
