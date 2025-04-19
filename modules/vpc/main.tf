@@ -11,6 +11,16 @@ resource "aws_internet_gateway" "main" {
     Name = "${var.env}-${var.project_name}-igw"
   }
 }
+resource "aws_vpc_peering_connection" "main" {
+  vpc_id        = aws_vpc.main.id
+  peer_vpc_id   = data.aws_vpc.default.id
+  auto_accept   = true
+
+  tags = {
+    Name = "${var.env}-default-vpc-new-vpc"
+  }
+}
+
 resource "aws_subnet" "public" {
   count             = length(var.public_subnets_cidr)
   vpc_id            = aws_vpc.main.id
@@ -41,8 +51,7 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table_association" "public" {
   count          = length(var.public_subnets_cidr)
-  gateway_id     = aws_internet_gateway.main.id
-  route_table_id = lookup(aws_route_table.public[count.index], "id" , null)
+  route_table_id = aws_route_table.public[count.index].id
 }
 
 
@@ -57,15 +66,6 @@ resource "aws_subnet" "private" {
   }
 }
 
-resource "aws_vpc_peering_connection" "main" {
-  vpc_id        = aws_vpc.main.id
-  peer_vpc_id   = data.aws_vpc.default.id
-  auto_accept   = true
-
-  tags = {
-    Name = "${var.env}-default-vpc-new-vpc"
-  }
-}
 resource "aws_route" "main" {
   route_table_id            = aws_vpc.main.main_route_table_id
   destination_cidr_block    = data.aws_vpc.default.cidr_block
