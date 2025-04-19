@@ -4,26 +4,26 @@ resource "aws_vpc" "main" {
     Name = "${var.env}-${var.project_name}-vpc"
   }
 }
-resource "aws_subnet" "main" {
-  count             = length(var.subnets_cidr)
+resource "aws_subnet" "public" {
+  count             = length(var.public_subnets_cidr)
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.subnets_cidr[count.index]
+  cidr_block        = var.public_subnets_cidr[count.index]
   availability_zone = var.az[count.index]
 
   tags = {
     Name = "${var.env}-${var.project_name}-subnet-${count.index}"
   }
 }
-# resource "aws_subnet" "private" {
-#   count             = length(var.private_subnets_cidr)
-#   vpc_id            = aws_vpc.main.id
-#   cidr_block        = var.private_subnets_cidr[count.index]
-#   availability_zone = var.az[count.index]
-#
-#   tags = {
-#     Name = "private_subnet-${count.index}"
-#   }
-# }
+resource "aws_subnet" "private" {
+  count             = length(var.private_subnets_cidr)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnets_cidr[count.index]
+  availability_zone = var.az[count.index]
+
+  tags = {
+    Name = "private_subnet-${count.index}"
+  }
+}
 
 resource "aws_vpc_peering_connection" "main" {
   vpc_id        = aws_vpc.main.id
@@ -75,7 +75,7 @@ resource "aws_security_group" "test" {
 resource "aws_instance" "test" {
   ami           = data.aws_ami.test.id
   instance_type = "t3.micro"
-  subnet_id = aws_subnet.main[0].id
+  subnet_id = aws_subnet.private[0].id
   vpc_security_group_ids = [aws_security_group.test.id]
   tags = {
     Name = "test"
