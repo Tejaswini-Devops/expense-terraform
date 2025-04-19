@@ -55,6 +55,7 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public[count.index].id
 }
 resource "aws_eip" "main" {
+  count = length(var.public_subnets_cidr)
   domain   = "vpc"
 }
 
