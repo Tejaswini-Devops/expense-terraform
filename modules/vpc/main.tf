@@ -41,7 +41,8 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table_association" "public" {
   count          = length(var.public_subnets_cidr)
-  route_table_id = lookup(aws_route_table.public[count.index],"id",null)
+  gateway_id     = aws_internet_gateway.main.id
+  route_table_id = lookup(aws_route_table.public[count.index], "id" , null)
 }
 
 
