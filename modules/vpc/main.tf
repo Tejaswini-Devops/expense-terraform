@@ -21,7 +21,7 @@ resource "aws_subnet" "public" {
     Name = "public_subnet-${count.index+1}"
   }
 }
-resource "aws_route_table" "main" {
+resource "aws_route_table" "public" {
   count             = length(var.public_subnets_cidr)
   vpc_id             = aws_vpc.main.id
 
@@ -29,11 +29,23 @@ resource "aws_route_table" "main" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
   }
+  route {
+    cidr_block = data.aws_vpc.default.cidr_block
+    vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+  }
 
   tags = {
     Name = "public_rt-${count.index+1}"
   }
 }
+
+resource "aws_route_table_association" "public" {
+  count          = length(var.public_subnets_cidr)
+  subnet_id      = aws_subnet.public.id
+  route_table_id = lookup(aws_route_table.public[count.index],"id",null)
+}
+
+
 resource "aws_subnet" "private" {
   count             = length(var.private_subnets_cidr)
   vpc_id            = aws_vpc.main.id
