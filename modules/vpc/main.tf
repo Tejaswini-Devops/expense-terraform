@@ -54,6 +54,7 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public[count.index].id
   subnet_id      = aws_subnet.public[count.index].id
 }
+# its a ip we need for internet connection
 resource "aws_eip" "main" {
   count = length(var.public_subnets_cidr)
   domain   = "vpc"
