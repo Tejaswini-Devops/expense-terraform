@@ -41,7 +41,6 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table_association" "public" {
   count          = length(var.public_subnets_cidr)
-  subnet_id      = aws_subnet.public.id
   route_table_id = lookup(aws_route_table.public[count.index],"id",null)
 }
 
