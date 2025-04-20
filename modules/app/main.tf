@@ -34,11 +34,11 @@ resource "aws_launch_template" "main" {
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 }
-
 resource "aws_autoscaling_group" "main" {
-  desired_capacity   = var.instance_capacity
-  max_size           = var.instance_capacity # we will see later
-  min_size           = var.instance_capacity
+  name                = "${local.name}-asg"
+  desired_capacity    = var.instance_capacity
+  max_size            = var.instance_capacity # TBD, THis we will fine tune after autoscaling
+  min_size            = var.instance_capacity
   vpc_zone_identifier = var.vpc_zone_identifier # it is a place we are saying to create instamce in app subnet
 
   launch_template {
