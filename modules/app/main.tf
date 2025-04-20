@@ -25,7 +25,7 @@ resource "aws_security_group" "main" {
     ipv6_cidr_blocks = ["::/0"]
   }
   tags = {
-    Name = "${local.name}-rds-sg"
+    Name = "${local.name}-sg"
   }
 }
 resource "aws_launch_template" "main" {
