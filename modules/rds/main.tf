@@ -14,9 +14,10 @@ resource "aws_db_subnet_group" "main" {
 }
 # we create this to say only app subnets should access db instances here we provide what all subnets should access db_instances
 resource "aws_security_group" "main" {
-  name        = "${var.env}-${var.project_name}-security-group"
-  description = "${var.env}-${var.project_name}-security-group"
+  name        = "${var.env}-${var.project_name}-rds-sg"
+  description = "${var.env}-${var.project_name}-rds-sg"
   vpc_id      = var.vpc_id # we need this because which vpc we wanna create it
+
   ingress {
     from_port        = 3306
     to_port          = 3306
@@ -32,7 +33,7 @@ resource "aws_security_group" "main" {
     ipv6_cidr_blocks = ["::/0"]
   }
   tags = {
-    Name = "${var.env}-${var.project_name}-security-group"
+    Name = "${var.env}-${var.project_name}-rds-sg"
   }
 }
 

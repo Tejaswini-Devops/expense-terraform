@@ -26,7 +26,7 @@ module "rds" {
   project_name      = var.project_name
   kms_key_id        = var.kms_key_id
   # the subnets_ids are we are looking for db_subnets_cidr in vpc main module so that that rds sits only in db2 instances
-  subnets_ids       = lookup(lookup(module.vpc, "main", null ),"db_subnets_cidr",null)
+  subnets_ids       = lookup(lookup(module.vpc, "main", null ),"db_subnets_ids",null)
   vpc_id            = lookup(lookup(module.vpc, "main", null ),"vpc_id",null)
   sg_cidr_blocks    = lookup(lookup(var.vpc,"main",null),"app_subnets_cidr",null)
 }
