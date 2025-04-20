@@ -1,5 +1,6 @@
 env           = "dev"
 project_name  = "Expense"
+kms_key_id    = "arn:aws:kms:us-east-1:522814736516:key/94568fc4-e087-46db-8d88-a6e69ed61d8e"
 
 vpc = {
   main = {
@@ -9,5 +10,16 @@ vpc = {
     app_subnets_cidr = ["10.10.2.0/25", "10.10.2.128/25"]
     db_subnets_cidr = ["10.10.3.0/25", "10.10.3.128/25"]
     az           = ["us-east-1a", "us-east-1b"]
+  }
+}
+rds = {
+  main = {
+    allocated_storage    = 20
+    db_name              = "expense"
+    engine               = "mysql"
+    engine_version       = "5.7"
+    instance_class       = "db.t3.micro"
+    family               = "mysql5.7"
+
   }
 }
