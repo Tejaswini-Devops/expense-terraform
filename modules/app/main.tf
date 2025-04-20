@@ -1,24 +1,22 @@
 resource "aws_security_group" "main" {
   name        = "${local.name}-sg"
   description = "${local.name}-sg"
-  vpc_id      = var.vpc_id
+  vpc_id      = var.vpc_id # we need this because which vpc we wanna create it
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.bastion_cidrs
-    description = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = var.bastion_cidrs
+    description      = "SSH"
   }
-
   ingress {
-    from_port   = var.app_port
-    to_port     = var.app_port
-    protocol    = "tcp"
-    cidr_blocks = var.sg_cidr_blocks
-    description = "APPPORT"
+    from_port        = var.app_port
+    to_port          = var.app_port
+    protocol         = "tcp"
+    cidr_blocks      = var.sg_cidr_blocks
+    description      = "APPPORT"
   }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -26,45 +24,30 @@ resource "aws_security_group" "main" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
   tags = {
-    Name = "${local.name}-sg"
-  }
-
-  lifecycle {
-    create_before_destroy = true
+    Name = "${local.name}-rds-sg"
   }
 }
-
 resource "aws_launch_template" "main" {
   name_prefix   = "${local.name}-lt"
   image_id      = data.aws_ami.centos8.image_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_autoscaling_group" "main" {
-  desired_capacity     = var.instance_capacity
-  max_size             = var.instance_capacity
-  min_size             = var.instance_capacity
-  vpc_zone_identifier  = var.vpc_zone_identifier
+  desired_capacity   = var.instance_capacity
+  max_size           = var.instance_capacity # we will see later
+  min_size           = var.instance_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier # it is a place we are saying to create instamce in app subnet
 
   launch_template {
     id      = aws_launch_template.main.id
     version = "$Latest"
   }
-
   tag {
     key                 = "Name"
     value               = local.name
     propagate_at_launch = true
-  }
-
-  lifecycle {
-    create_before_destroy = true
   }
 }

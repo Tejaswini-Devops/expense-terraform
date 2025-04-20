@@ -2,7 +2,6 @@ env               = "dev"
 project_name      = "expense"
 kms_key_id        = "arn:aws:kms:us-east-1:522814736516:key/94568fc4-e087-46db-8d88-a6e69ed61d8e"
 bastion_cidrs     = ["172.31.84.34/32"]
-
 vpc = {
   main = {
     vpc_cidr     = "10.10.0.0/21"
@@ -25,16 +24,10 @@ rds = {
   }
 }
 app = {
-  backend = {
+  main = {
     app_port          = 8080
     component         = "backend"
-    instance_capacity = 1
-    instance_type     = "t3.small"
-  },
-  frontend = {
-    app_port          = 80
-    component         = "frontend"
-    instance_capacity = 1
+    instance_capacity =  1
     instance_type     = "t3.small"
   }
 }
