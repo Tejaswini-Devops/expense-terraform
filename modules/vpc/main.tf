@@ -176,6 +176,9 @@ resource "aws_route" "main" {
   route_table_id            = aws_vpc.main.main_route_table_id
   destination_cidr_block    = data.aws_vpc.default.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.main.id
+  tags = {
+    Name = "Main Route Table"
+  }
 }
 
 resource "aws_route" "default" {
