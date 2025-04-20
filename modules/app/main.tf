@@ -36,7 +36,6 @@ resource "aws_launch_template" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  availability_zones = ["us-east-1a"]
   desired_capacity   = var.instance_capacity
   max_size           = var.instance_capacity # we will see later
   min_size           = var.instance_capacity
