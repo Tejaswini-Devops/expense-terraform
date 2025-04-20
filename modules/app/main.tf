@@ -28,7 +28,7 @@ resource "aws_security_group" "main" {
   }
 
   tags = {
-    Name = "${local.name}-rds-sg"
+    Name = "${local.name}-sg"
   }
 
   lifecycle {
