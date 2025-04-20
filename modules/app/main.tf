@@ -1,6 +1,6 @@
 resource "aws_security_group" "main" {
   name        = "${local.name}-sg"
-  description = "${local.name}-rds-sg"
+  description = "${local.name}-sg"
   vpc_id      = var.vpc_id # we need this because which vpc we wanna create it
 
   ingress {
