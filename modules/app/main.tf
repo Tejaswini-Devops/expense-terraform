@@ -40,6 +40,7 @@ resource "aws_autoscaling_group" "main" {
   desired_capacity   = var.instance_capacity
   max_size           = var.instance_capacity # we will see later
   min_size           = var.instance_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier # it is a place we are saying to create instamce in app subnet
 
   launch_template {
     id      = aws_launch_template.main.id

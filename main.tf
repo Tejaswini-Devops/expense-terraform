@@ -40,6 +40,7 @@ module "backend" {
   component         = lookup(each.value,"component", null  )
   instance_capacity = lookup(each.value,"instance_capacity", null  )
   instance_type     = lookup(each.value,"instance_type", null  )
+  vpc_zone_identifier = lookup(lookup(module.vpc, "main", null ),"app_subnets_ids",null)
   sg_cidr_blocks    = lookup(lookup(var.vpc,"main",null),"web_subnets_ids",null)
   vpc_id            = lookup(lookup(module.vpc, "main", null ),"vpc_id",null)
 }
