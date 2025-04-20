@@ -59,20 +59,18 @@ module "rds" {
 #   vpc_id            = lookup(lookup(module.vpc, "main", null ),"vpc_id",null)
 # }
 module "app" {
-  source = "./modules/app"
-  for_each           = var.app
-  env                = var.env
-  project_name       = var.project_name
-  component          = lookup(each.value,"component", null  )
-  app_port           = lookup(each.value,"app_port", null  )
-  instance_capacity  = lookup(each.value,"instance_capacity", null  )
-  instance_type      = lookup(each.value,"instance_type", null  )
-  bastion_cidrs      = var.bastion_cidrs
-  sg_cidr_blocks     = lookup(lookup(var.vpc,"main",null),"web_subnets_ids",null)
-  vpc_id             = module.vpc["main"].vpc_id
+  source              = "./modules/app"
+  for_each            = var.app
+  env                 = var.env
+  project_name        = var.project_name
+  component           = lookup(each.value, "component", null)
+  app_port            = lookup(each.value, "app_port", null)
+  instance_capacity   = lookup(each.value, "instance_capacity", null)
+  instance_type       = lookup(each.value, "instance_type", null)
+  bastion_cidrs       = var.bastion_cidrs
+  sg_cidr_blocks      = lookup(lookup(var.vpc, "main", null), "web_subnets_ids", null)
+  vpc_id              = module.vpc["main"].vpc_id
 
-  vpc_zone_identifier = each.key == "frontend" ?
-    module.vpc["main"].web_subnets_ids :
-    module.vpc["main"].app_subnets_ids
+  vpc_zone_identifier = each.key == "frontend" ? module.vpc["main"].web_subnets_ids : module.vpc["main"].app_subnets_ids
 }
 
