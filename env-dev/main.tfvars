@@ -24,10 +24,17 @@ rds = {
   }
 }
 app = {
-  main = {
-    app_port          = 8080
+  backend = {
     component         = "backend"
-    instance_capacity =  1
+    app_port          = 8080
+    instance_capacity = 1
+    instance_type     = "t3.small"
+  }
+
+  frontend = {
+    component         = "frontend"
+    app_port          = 80
+    instance_capacity = 1
     instance_type     = "t3.small"
   }
 }
