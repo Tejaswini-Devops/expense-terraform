@@ -29,7 +29,7 @@ resource "aws_security_group" "main" {
   }
 }
 resource "aws_lb" "main" {
-  name               = "local.name"
+  name               = local.name
   internal           = var.internal
   load_balancer_type = "application"
   security_groups    = [aws_security_group.main.id]
