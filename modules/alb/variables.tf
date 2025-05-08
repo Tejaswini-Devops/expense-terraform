@@ -6,3 +6,4 @@ variable "sg_cidr_blocks" {}
 variable "subnets" {}
 variable "internal" {}
 variable "acm_arn" {}
+variable "target_group_arn" {}

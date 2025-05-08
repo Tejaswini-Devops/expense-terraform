@@ -34,12 +34,15 @@ resource "aws_launch_template" "main" {
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 }
+# create instances
 resource "aws_autoscaling_group" "main" {
   name                = "${local.name}-asg"
   desired_capacity    = var.instance_capacity
   max_size            = var.instance_capacity # TBD, THis we will fine tune after autoscaling
   min_size            = var.instance_capacity
-  vpc_zone_identifier = var.vpc_zone_identifier # it is a place we are saying to create instamce in app subnet
+  vpc_zone_identifier = var.vpc_zone_identifier# it is a place we are saying to create instamce in app subnet
+  target_group_arns = [aws_lb_target_group.main.arn] # assigning instances to the target groups
+  # In Terraform, a target group typically refers to an AWS resource that defines how a load balancer (like an Application Load Balancer - ALB) routes traffic to registered targets (e.g., EC2 instances, IPs, or Lambda functions).
 
   launch_template {
     id      = aws_launch_template.main.id
@@ -50,4 +53,15 @@ resource "aws_autoscaling_group" "main" {
     value               = local.name
     propagate_at_launch = true
   }
+}
+resource "aws_lb_target_group" "main" {
+  name     = "${local.name}-tg"
+  port     = var.app_port
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+
+  # health_check {
+  #   port     = 80
+  #   protocol = "HTTP"
+  # }
 }

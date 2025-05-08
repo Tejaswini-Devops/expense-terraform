@@ -39,7 +39,7 @@ resource "aws_lb" "main" {
     Name = local.name
   }
 }
-resource "aws_lb_listener" "main" {
+resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -48,17 +48,6 @@ resource "aws_lb_listener" "main" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.main.arn
+    target_group_arn = var.target_group_arn
   }
 }
-# resource "aws_lb_target_group" "main" {
-#   name     = "${local.name}-alb-sg"
-#   port     = 6081
-#   protocol = "GENEVE"
-#   vpc_id   = aws_vpc.example.id
-#
-#   health_check {
-#     port     = 80
-#     protocol = "HTTP"
-#   }
-# }
