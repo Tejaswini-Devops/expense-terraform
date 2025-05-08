@@ -9,3 +9,4 @@ variable "acm_arn" {}
 variable "vpc" {}
 variable "rds" {}
 variable "app" {}
+variable "zone_id" {}

@@ -66,3 +66,13 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+# we have created route53 here is where load balancer should have a dns record as frontend talks to provate loadbalnacer not backend server
+resource "aws_route53_record" "main" {
+  zone_id = var.zone_id
+  name    = "${var.dns_name}-${var.env}"
+  type    = "CNAME"
+  ttl     = 30
+  records = [aws_lb.main.dns_name]
+}
+
+

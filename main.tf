@@ -83,6 +83,8 @@ module "public-alb" {
   env         = var.env
   project_name = var.project_name
   acm_arn      = var.acm_arn
+  dns_name     = "frontend"
+  zone_id      = var.zone_id
 
   subnets = module.vpc.public_subnets_ids
   vpc_id = module.vpc.vpc_id
@@ -100,6 +102,8 @@ module "private-alb" {
   env         = var.env
   project_name = var.project_name
   acm_arn      = var.acm_arn
+  dns_name     = "backend"
+  zone_id      = var.zone_id
 
   subnets = module.vpc.app_subnets_ids
   vpc_id = module.vpc.vpc_id
