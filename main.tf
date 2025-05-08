@@ -86,8 +86,8 @@ module "public-alb" {
   dns_name     = "frontend"
   zone_id      = var.zone_id
 
-  subnets = module.vpc.public_subnets_ids
-  vpc_id = module.vpc.vpc_id
+  subnets = module.vpc["main"].public_subnets_ids
+  vpc_id  = module.vpc["main"].vpc_id
   target_group_arn =  module.app["frontend"].target_group_arn
 
 
@@ -105,8 +105,8 @@ module "private-alb" {
   dns_name     = "backend"
   zone_id      = var.zone_id
 
-  subnets = module.vpc.app_subnets_ids
-  vpc_id = module.vpc.vpc_id
+  subnets = module.vpc["main"].app_subnets_ids
+  vpc_id  = module.vpc["main"].vpc_id
   target_group_arn =  module.app["backend"].target_group_arn
 
 }
