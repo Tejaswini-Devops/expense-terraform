@@ -1,10 +1,23 @@
-variable "env" {}
+# variable "env" {}
+# variable "project_name" {}
+# variable "alb_name" {}
+# variable "vpc_id" {}
+# variable "sg_cidr_blocks" {}
+# variable "subnets" {}
+# variable "internal" {}
+# variable "acm_arn" {}
+# variable "target_group_arn" {}
+# variable "zone_id" {}
+# variable "dns_name" {}
+
+
 variable "project_name" {}
 variable "alb_name" {}
+variable "internal" {}
+variable "env" {}
 variable "vpc_id" {}
 variable "sg_cidr_blocks" {}
 variable "subnets" {}
-variable "internal" {}
 variable "acm_arn" {}
 variable "target_group_arn" {}
 variable "zone_id" {}
