@@ -52,7 +52,6 @@ env              = "dev"
 project_name     = "expense"
 kms_key_id       = "arn:aws:kms:us-east-1:522814736516:key/94568fc4-e087-46db-8d88-a6e69ed61d8e"
 bastion_cidrs     = ["172.31.84.34/32"]
-# prometheus_cidrs = ["172.31.84.209/32"]
 acm_arn          = "arn:aws:acm:us-east-1:522814736516:certificate/41696961-81dc-404c-a055-49b3e536cdba"
 zone_id          = "Z07191123NJU9NTTKKZJ1"
 
