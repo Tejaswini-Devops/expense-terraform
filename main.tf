@@ -61,17 +61,23 @@ module "rds" {
 module "app" {
   source              = "./modules/app"
   for_each            = var.app
+
   env                 = var.env
   project_name        = var.project_name
-  app_port            = lookup(each.value, "app_port", null)
-  bastion_cidrs       = lookup(each.value, "bastion_cidrs", null)
   component           = lookup(each.value, "component", null)
+  app_port            = lookup(each.value, "app_port", null)
   instance_capacity   = lookup(each.value, "instance_capacity", null)
   instance_type       = lookup(each.value, "instance_type", null)
+  bastion_cidrs       = lookup(each.value, "bastion_cidrs", null)
+
   vpc_id              = module.vpc["main"].vpc_id
-  vpc_zone_identifier = each.key == "frontend" ? module.vpc["main"].web_subnets_ids : module.vpc["main"].app_subnets_ids
-  sg_cidr_blocks      = each.key == "frontend" ? var.vpc["main"].web_subnets_cidr : var.vpc["main"].app_subnets_cidr
+
+  # Conditional subnet and CIDR assignment
+  vpc_zone_identifier = each.key == "frontend" ? module.vpc["main"].public_subnets_ids : module.vpc["main"].app_subnets_ids
+  sg_cidr_blocks      = each.key == "frontend" ? var.vpc["main"].public_subnets_cidr : var.vpc["main"].app_subnets_cidr
 }
+
+
 
 module "public-alb" {
 
