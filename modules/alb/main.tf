@@ -48,7 +48,7 @@ resource "aws_lb_listener" "https" {
 
   default_action {
     type             = "forward"
-    target_group_arn = var.target_group_arn
+    target_group_arn = var.target_group_arn # output.tf  of app module where we created target group in app module and refering here.
   }
 }
 resource "aws_lb_listener" "http" {
