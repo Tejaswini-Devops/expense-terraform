@@ -4,19 +4,21 @@ resource "aws_security_group" "main" {
   vpc_id      = var.vpc_id # we need this because which vpc we wanna create it
 
   ingress {
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = var.bastion_cidrs
-    description      = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.bastion_cidrs
+    description = "SSH Access from Bastion"
   }
+
   ingress {
-    from_port        = var.app_port
-    to_port          = var.app_port
-    protocol         = "tcp"
-    cidr_blocks      = var.sg_cidr_blocks
-    description      = "APPPORT"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "tcp"
+    cidr_blocks = var.sg_cidr_blocks
+    description = "App Port Access"
   }
+
   egress {
     from_port        = 0
     to_port          = 0

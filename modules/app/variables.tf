@@ -1,10 +1,13 @@
 variable "env" {}
 variable "project_name" {}
-variable "instance_type" {}
-variable "vpc_id" {}
-variable "bastion_cidrs" {}
 variable "app_port" {}
-variable "sg_cidr_blocks" {}
+variable "bastion_cidrs" {
+  default = []
+}
 variable "instance_capacity" {}
+variable "instance_type" {}
 variable "component" {}
 variable "vpc_zone_identifier" {}
+variable "sg_cidr_blocks" {}
+variable "vpc_id" {}
+
