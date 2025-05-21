@@ -31,13 +31,13 @@ resource "aws_security_group" "main" {
   }
 }
 resource "aws_launch_template" "main" {
-  name_prefix   = "${local.name}-lt"
-  image_id      = data.aws_ami.centos8.image_id
-  instance_type = var.instance_type
+  name_prefix            = "${local.name}-lt"
+  image_id               = data.aws_ami.centos8.image_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
-    service_name = var.component,
+    service_name = var.component
     env          = var.env
   }))
 
