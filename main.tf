@@ -161,6 +161,7 @@ module "backend" {
   vpc_zone_identifier = module.vpc.app_subnets_ids     # where backend instances will run
   vpc_id              = module.vpc.vpc_id
   parameters          =["arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.rds.*"]
+  kms                 = var.kms_key_id
 }
 
 module "frontend" {
@@ -176,6 +177,7 @@ module "frontend" {
   vpc_zone_identifier = module.vpc.web_subnets_ids     # where frontend instances will run
   vpc_id              = module.vpc.vpc_id
   parameters          = []
+  kms                 = var.kms_key_id
 }
 
 
