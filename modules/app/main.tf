@@ -70,7 +70,7 @@ resource "aws_lb_target_group" "main" {
     timeout = 2
   }
 }
-resource "aws_iam_role" "main" {
+resource "aws_iam_role" "main" {  # creating role for ec2 instance.
   name = "${local.name}-role"
 
   assume_role_policy = jsonencode({
@@ -114,4 +114,8 @@ resource "aws_iam_role" "main" {
       ]
     })
   }
+}
+resource "aws_iam_instance_profile" "main" {
+  name = "${local.name}-role"
+  role = aws_iam_role.main.name
 }
