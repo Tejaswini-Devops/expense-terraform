@@ -13,7 +13,7 @@ dnf install -y ansible python3.12 python3.12-pip &>>"$LOG_FILE"
 /usr/bin/python3.12 -c "import boto3, botocore; print('✅ boto3 and botocore installed')" &>>"$LOG_FILE"
 
 # Run ansible-pull with Python 3.12 explicitly set
-ansible-pull -i "localhost ansible_python_interpreter=/usr/bin/python3.12," \
+ansible-pull -i "localhost ansible_python_interpreter=/usr/bin/python3.12" \
   -U https://github.com/Tejaswini-Devops/expense-ansible \
   expense.yml \
   -e service_name=${service_name} \
