@@ -115,7 +115,7 @@ resource "aws_iam_role" "main" {  # creating role for ec2 instance.
     })
   }
 }
-resource "aws_iam_instance_profile" "main" {
+resource "aws_iam_instance_profile" "main" {# used to create instance profile ARN
   name = "${local.name}-role"
   role = aws_iam_role.main.name
 }
