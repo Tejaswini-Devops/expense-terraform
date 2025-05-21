@@ -10,4 +10,4 @@ variable "component" {}
 variable "vpc_zone_identifier" {}
 variable "sg_cidr_blocks" {}
 variable "vpc_id" {}
-
+variable "parameters" {}

@@ -107,13 +107,16 @@ resource "aws_iam_role" "main" {  # creating role for ec2 instance.
           "Sid" : "GetParameter",
           "Effect" : "Allow",
           "Action" : [
+            "kms:Decrypt",
             "ssm:GetParameterHistory",
             "ssm:DescribeDocumentParameters",
             "ssm:GetParametersByPath",
             "ssm:GetParameters",
             "ssm:GetParameter"
           ],
-          "Resource" : "arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.${var.component}.*"
+          "Resource" :concat([ "arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.${var.component}.*",
+            "arn:aws:kms:us-east-1:522814736516:key/94568fc4-e087-46db-8d88-a6e69ed61d8e"],var.parameters)
+
         },
         {
           "Sid" : "DescribeAllParameters",
