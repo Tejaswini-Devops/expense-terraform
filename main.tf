@@ -149,7 +149,7 @@ module "rds" {
 }
 
 module "backend" {
-  depends_on         = [module.rds]
+  depends_on         = [module.rds] #after rds it runs so we use depends on keyword
   source              = "./modules/app"
   env                 = var.env
   project_name        = var.project_name
