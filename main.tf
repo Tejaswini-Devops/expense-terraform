@@ -149,6 +149,7 @@ module "rds" {
 }
 
 module "backend" {
+  depends_on         = [module.rds]
   source              = "./modules/app"
   env                 = var.env
   project_name        = var.project_name
