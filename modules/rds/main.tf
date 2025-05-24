@@ -55,7 +55,6 @@
 #
 # }
 
-
 resource "aws_db_parameter_group" "main" {
   name   = "${var.env}-${var.project_name}-pg"
   family = var.family
@@ -111,7 +110,9 @@ resource "aws_db_instance" "main" {
   kms_key_id             = var.kms_key_id
   db_subnet_group_name   = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.main.id]
+  copy_tags_to_snapshot  = true
 }
+
 
 
 
