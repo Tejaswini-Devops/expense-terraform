@@ -10,6 +10,13 @@ resource "aws_security_group" "main" {
     cidr_blocks = var.bastion_cidrs
     description = "SSH Access from Bastion"
   }
+  ingress {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = var.prometheus_cidrs
+    description = "prometheus"
+  }
 
   ingress {
     from_port   = var.app_port

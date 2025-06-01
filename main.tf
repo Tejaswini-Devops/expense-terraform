@@ -163,6 +163,7 @@ module "backend" {
   vpc_id              = module.vpc.vpc_id
   parameters          =["arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.rds.*"]
   kms                 = var.kms_key_id
+  prometheus_cidrs    = var.prometheus_cidrs
 }
 
 module "frontend" {
@@ -179,6 +180,7 @@ module "frontend" {
   vpc_id              = module.vpc.vpc_id
   parameters          = []
   kms                 = var.kms_key_id
+  prometheus_cidrs    = var.prometheus_cidrs
 }
 
 
