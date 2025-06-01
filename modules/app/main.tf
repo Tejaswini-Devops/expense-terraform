@@ -78,8 +78,13 @@ resource "aws_autoscaling_group" "main" {
     version = "$Latest"
   }
   tag {
+    key                 = "Name"
+    value               = local.name
+    propagate_at_launch = true
+  }
+  tag {
     key                 = "Monitor"
-    value               = yes
+    value               = "yes"
     propagate_at_launch = true
   }
 }
