@@ -161,7 +161,7 @@ module "backend" {
   sg_cidr_blocks      = var.app_subnets_cidr           # who can access backend
   vpc_zone_identifier = module.vpc.app_subnets_ids     # where backend instances will run
   vpc_id              = module.vpc.vpc_id
-  parameters          =["arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.rds.*"]
+  parameters          =["arn:aws:ssm:us-east-1:522814736516:parameter/${var.env}.${var.project_name}.rds.*","arn:aws:ssm:us-east-1:522814736516:parameter/newrelic.*"]
   kms                 = var.kms_key_id
   prometheus_cidrs    = var.prometheus_cidrs
 }
@@ -178,7 +178,7 @@ module "frontend" {
   sg_cidr_blocks      = var.public_subnets_cidr        # who can access frontend (usually 0.0.0.0/0)
   vpc_zone_identifier = module.vpc.web_subnets_ids     # where frontend instances will run
   vpc_id              = module.vpc.vpc_id
-  parameters          = []
+  parameters          = ["arn:aws:ssm:us-east-1:522814736516:parameter/newrelic.*"]
   kms                 = var.kms_key_id
   prometheus_cidrs    = var.prometheus_cidrs
 }
